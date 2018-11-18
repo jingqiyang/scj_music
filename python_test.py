@@ -4,6 +4,10 @@ commands to run:
     {ok, Pid} = python:start([{python_path, "."}]).
     python:call(Pid, python_test, function_name, []).
 
+    ...
+
+    python:stop(Pid).
+
 * "modules/erlport" should be replaced with path to erlport folder
 * "." should be replaced with path to python files
 
@@ -22,14 +26,17 @@ the erlang shell
 part of the module
 """
 
-from erlport.erlterms import Atom
-from erlport.erlang import call
+# from erlport.erlterms import Atom
+# from erlport.erlang import call
+import sys
 
 def main():
     print erlang_call()
 
 def test():
-    return "hello world! inside python function"
+    while (True):
+        print "loop"
+    return "ok"
 
 def erlang_call():
     return call(Atom("erlport_test"), Atom("test"), [])
