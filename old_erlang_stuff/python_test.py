@@ -2,7 +2,7 @@
 commands to run:
     erl -env ERL_LIBS modules/erlport
     {ok, Pid} = python:start([{python_path, "."}]).
-    python:call(Pid, python_test, function_name, []).
+    python:call(Pid, python_test, test, []).
 
     ...
 
@@ -26,20 +26,47 @@ the erlang shell
 part of the module
 """
 
-# from erlport.erlterms import Atom
-# from erlport.erlang import call
+from erlport.erlterms import Atom
+from erlport.erlang import call
+import pygame
+import os
 import sys
+from instrument import Instrument
 
 def main():
     print erlang_call()
 
 def test():
-    while (True):
-        print "loop"
+    name = sys.stdin.read()
+    sys.stdout.write("Hello, " + name)
+    return "ok"
+
+def printing():
+    sys.stdout.write("alskdfj")
     return "ok"
 
 def erlang_call():
     return call(Atom("erlport_test"), Atom("test"), [])
 
+
+def run():
+    pygame.init()
+    pygame.mixer.pre_init(44100, -16, 2, 4096) # setup mixer to avoid sound lag
+
+    piano = Instrument()
+    while 1:
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    sys.exit(0)
+                else:
+                    send_key(event.key)
+                    piano.play_key_sound(event.key)
+
+
+def send_key(num):
+    print "send note: "+ str(num)
+    
 if __name__ == '__main__':
     main()
