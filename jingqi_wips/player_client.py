@@ -18,18 +18,16 @@ from instrument import Instrument
 import socket
 import threading
 
-from get_key import get_key
-
 pygame.mixer.pre_init(44100, -16, 2, 1024) # setup mixer to avoid sound lag
 pygame.mixer.init()
 pygame.init()
 screen = pygame.display.set_mode((100, 500), 0, 32)
 
-piano = Instrument()
+instrument = Instrument()
 
 def main():
     """run client loop."""
-    host, port = get_args()
+    host, port, instrument = get_args()
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
     server.connect((host, port))
@@ -46,16 +44,16 @@ def main():
                     sys.exit(0)
                 else:
                     # convert to string
-                    server.send(pygame.key.name(event.key))
+                    server.send(instrument+pygame.key.name(event.key))
 
 
 def get_args():
     """get host ip and port from command line args."""
-    if len(sys.argv) != 3:
-        print "Correct usage: script, IP address, port number"
+    if len(sys.argv) != 4:
+        print "Correct usage: script, IP address, port number, instrument (piano (p), trumpet (t), or flute (f))"
         exit() 
       
-    return (str(sys.argv[1]), int(sys.argv[2]))
+    return (str(sys.argv[1]), int(sys.argv[2]), str(sys.argv[3]))
 
 
 def send_key(num):
@@ -65,10 +63,11 @@ def send_key(num):
 def receive_keys(server):
     """receive messages as string, convert back to pygame key."""
     while True:
-        received_key = get_key(server.recv(1))
-        if received_key != None:
-            send_key(received_key)
-            piano.play_key_sound(received_key)
+        received_msg = server.recv(2)
+        key = received_msg[1]
+        if key != None:
+            send_key(key)
+            instrument.play_key_sound(received_msg)
 
 
 if __name__ == '__main__':

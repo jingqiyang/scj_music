@@ -60,7 +60,7 @@ def start_client(conn, addr):
     while True:
         try:
             # 2048 is buffer size (should be small power of 2)
-            message = conn.recv(1)
+            message = conn.recv(2)
 
             # print msg on server terminal, then send to all clients
             if message:
