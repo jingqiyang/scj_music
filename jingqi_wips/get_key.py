@@ -139,4 +139,7 @@ keys = {
 }
 
 def get_key(key):
-    return keys[key]
+    if key in keys:
+        return keys[key]
+    else:
+        return None

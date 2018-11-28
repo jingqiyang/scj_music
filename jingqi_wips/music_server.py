@@ -37,6 +37,7 @@ def main():
 
         # start client thread
         thread = threading.Thread(target = start_client, args = [conn, addr])
+        thread.daemon = True
         thread.start()
 
     conn.close()
@@ -59,7 +60,7 @@ def start_client(conn, addr):
     while True:
         try:
             # 2048 is buffer size (should be small power of 2)
-            message = conn.recv(2048)
+            message = conn.recv(1)
 
             # print msg on server terminal, then send to all clients
             if message:
