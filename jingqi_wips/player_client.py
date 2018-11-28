@@ -23,6 +23,7 @@ from get_key import get_key
 pygame.mixer.pre_init(44100, -16, 2, 1024) # setup mixer to avoid sound lag
 pygame.mixer.init()
 pygame.init()
+screen = pygame.display.set_mode((100, 500), 0, 32)
 
 piano = Instrument()
 
