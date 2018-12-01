@@ -1,13 +1,9 @@
 #!/usr/bin/env python
 
 """
-# run with ./player_client.py [host] [port]
-for example: ./player_client.py 127.0.0.1 65432
-
-problems:
-* finicky with key presses
-* EXTREMELY laggy
-* doesn't kill receive thread
+client for scj_music
+run with: python player_client.py [host] [port] [p | t | f]
+for example: python player_client.py 127.0.0.1 65432 p
 """
 
 import pygame

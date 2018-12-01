@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
 """
-# run with ./music_server.py [host] [port]
-for example: ./music_server.py 127.0.0.1 65432
-
-notes:
-* don't know how to kill server + kill client threads
-* server prints out notes sent from any client to terminal
+server for scj_music
+run with: python music_server.py [host] [port]
+for example: python music_server.py 127.0.0.1 65432
+port number should be greater than or equal to 1024
 """
 
 import socket
@@ -16,24 +14,24 @@ import sys
 clients = []
 
 def main():
-    """run server."""
+    """
+    get ip and port, start server, run loop that adds new connections
+    to list of clients, and starts thread for each client.
+    each thread receives messages and broadcasts to all clients.
+    """
     host, port = get_args()
-    global clients
 
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
     server.bind((host, port))
     server.listen(20)  # 20 is max connections
 
     while True:
-        # accept a connection request and stores two parameters  
-        # conn is a socket object for that user
-        # addr contains the IP of the client at addr[0]
         conn, addr = server.accept()
 
         clients.append(conn)    # add to list of clients
 
         print addr[0] + " connected"
+        print str(len(clients)) + " clients in server"
 
         # start client thread
         thread = threading.Thread(target = start_client, args = [conn, addr])
@@ -54,28 +52,25 @@ def get_args():
 
 
 def start_client(conn, addr):
-    """client receive/send messages loop."""
-    global clients
-
+    """
+    function run by client thread for receive/send messages loop.
+    for each message received from client, broadcast to all clients
+    in server.
+    """
     while True:
         try:
-            # 2048 is buffer size (should be small power of 2)
+            # buffer size is 2 for 2 character message (instrument + key)
             message = conn.recv(2)
-
-            # print msg on server terminal, then send to all clients
-            if message:
-                print message
-                broadcast(message) 
-            else:
-                clients.remove(conn)    # connection is broken
-
+            broadcast(message)
         except: 
             continue
 
 
 def broadcast(message):
-    """send message to all clients."""
-    global clients
+    """
+    send message to all clients. if a client cannot get a message,
+    remove client from server.
+    """
     for client in clients:
         try: 
             client.send(message)
