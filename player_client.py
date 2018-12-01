@@ -23,7 +23,7 @@ import wave
 import datetime
 #################
 
-pygame.mixer.pre_init(44100, -16, 2, 1024) # setup mixer to avoid sound lag
+pygame.mixer.pre_init(44100, -16, 8, 1024) # setup mixer to avoid sound lag
 pygame.mixer.init()
 pygame.init()
 screen = pygame.display.set_mode((100, 500), 0, 32)
