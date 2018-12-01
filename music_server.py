@@ -67,7 +67,10 @@ def start_client(conn, addr):
                 print message
                 broadcast(message, conn) 
             else:
+                print "broken"
+                print len(clients)
                 clients.remove(conn)    # connection is broken
+                print len(clients)
 
         except: 
             continue

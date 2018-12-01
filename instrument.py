@@ -66,13 +66,13 @@ class  Instrument():
 
 	def play_key_sound(self, message):
 		instrument = message[0]
-		key = get_key(message[1])
-
-		if instrument in self.instrument_notes:
-			instr = self.instrument_notes[instrument]
-			if key in self.pygame_string:
-				key = self.pygame_string[key]
-				instr[key].play()
-				instr[key].fadeout(800)
+		if len(message) == 2:
+			key = get_key(message[1])
+			if instrument in self.instrument_notes:
+				instr = self.instrument_notes[instrument]
+				if key in self.pygame_string:
+					key = self.pygame_string[key]
+					instr[key].play()
+					instr[key].fadeout(800)
 
 

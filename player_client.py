@@ -13,10 +13,15 @@ problems:
 import pygame
 import os
 import sys
-from instrument import Instrument
+from instrument2 import Instrument
 
 import socket
 import threading
+
+#################
+import wave
+import datetime
+#################
 
 pygame.mixer.pre_init(44100, -16, 2, 1024) # setup mixer to avoid sound lag
 pygame.mixer.init()
@@ -27,12 +32,22 @@ instrument = Instrument()
 
 def main():
     """run client loop."""
-    host, port, instrument = get_args()
+    host, port, instrument, username = get_args()
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
     server.connect((host, port))
 
-    thread = threading.Thread(target = receive_keys, args = [server])
+    ##################
+    now = datetime.datetime.now()
+    filename = username + "_" + instrument + "_" + str(now.year) +"_" + str(now.month) + "_" + str(now.day) + "___" + str(now.hour) +"_" + str(now.minute) + "_" + str(now.second) + ".wav"
+    recording = wave.open(filename, 'w')
+    recording.setframerate(44100)
+    recording.setnchannels(2)
+    recording.setsampwidth(2)
+    ##################
+
+
+    thread = threading.Thread(target = receive_keys, args = [server, recording])
     thread.daemon = True
     thread.start()
 
@@ -41,6 +56,7 @@ def main():
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
+                    recording.close()
                     sys.exit(0)
                 else:
                     # convert to string
@@ -49,25 +65,26 @@ def main():
 
 def get_args():
     """get host ip and port from command line args."""
-    if len(sys.argv) != 4:
-        print "Correct usage: script, IP address, port number, instrument (piano (p), trumpet (t), or flute (f))"
+    if len(sys.argv) != 5:
+        print "Correct usage: script, IP address, port number, instrument (piano (p), trumpet (t), or flute (f)), username"
         exit() 
       
-    return (str(sys.argv[1]), int(sys.argv[2]), str(sys.argv[3]))
+    return (str(sys.argv[1]), int(sys.argv[2]), str(sys.argv[3]), str(sys.argv[4]))
 
 
 def send_key(num):
     print "send note: "+ str(num)
 
 
-def receive_keys(server):
+def receive_keys(server, recording):
     """receive messages as string, convert back to pygame key."""
     while True:
         received_msg = server.recv(2)
-        key = received_msg[1]
+        if len(received_msg) == 2:
+            key = received_msg[1]
         if key != None:
             send_key(key)
-            instrument.play_key_sound(received_msg)
+            instrument.play_key_sound(received_msg, recording)
 
 
 if __name__ == '__main__':
