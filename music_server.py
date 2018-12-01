@@ -25,13 +25,12 @@ def main():
     server.bind((host, port))
     server.listen(20)  # 20 is max connections
 
+    print "Server running at host " + host + " and port " + str(port)
+
     while True:
         conn, addr = server.accept()
 
         clients.append(conn)    # add to list of clients
-
-        print addr[0] + " connected"
-        print str(len(clients)) + " clients in server"
 
         # start client thread
         thread = threading.Thread(target = start_client, args = [conn, addr])
