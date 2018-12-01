@@ -13,7 +13,7 @@ problems:
 import pygame
 import os
 import sys
-from instrument2 import Instrument
+from instrument import Instrument
 
 import socket
 import threading
