@@ -65,18 +65,15 @@ def start_client(conn, addr):
             # print msg on server terminal, then send to all clients
             if message:
                 print message
-                broadcast(message, conn) 
+                broadcast(message) 
             else:
-                print "broken"
-                print len(clients)
                 clients.remove(conn)    # connection is broken
-                print len(clients)
 
         except: 
             continue
 
 
-def broadcast(message, conn):
+def broadcast(message):
     """send message to all clients."""
     global clients
     for client in clients:
@@ -84,7 +81,7 @@ def broadcast(message, conn):
             client.send(message)
         except: 
             client.close()
-            client.remove(conn)    # connection is broken
+            clients.remove(client)    # connection is broken
 
 
 if __name__ == '__main__':
