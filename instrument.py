@@ -64,7 +64,7 @@ class  Instrument():
 				 	os.path.join('sounds/flute','Flute.nonvib.ff.'+note+'.stereo.ogg')))
 		return flute_sounds
 
-	def play_key_sound(self, message):
+	def play_key_sound(self, message, recording):
 		instrument = message[0]
 		if len(message) == 2:
 			key = get_key(message[1])
@@ -72,6 +72,10 @@ class  Instrument():
 				instr = self.instrument_notes[instrument]
 				if key in self.pygame_string:
 					key = self.pygame_string[key]
+					###############################
+					sound_raw = instr[key].get_raw()
+					recording.writeframes(sound_raw)
+					###############################
 					instr[key].play()
 					instr[key].fadeout(800)
 
