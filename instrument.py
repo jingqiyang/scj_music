@@ -1,9 +1,31 @@
+#!/usr/bin/env python
+
+"""
+Instrument Class: 
+Controls the "playing" of available instrument sounds from the keyboard. 
+
+Given a message containing a instrument code and a keyboard key, will
+play the corresponding note for that instrument.
+
+Available instruments:
+- Piano (p)
+- Trumpet (t)
+- Flute (f)
+
+Message Ex: 
+'t1'  = 
+	instrument   = 't'
+	keyboard key = '1'
+Note to play: Trumpet C4
+"""
+
 import pygame
 import os
 
 class  Instrument():
 
 	def  __init__(self):
+		"""Create note - sound dictionaries for each instrument"""
 		self.keys = ["1", "2", "3", "4", "5", "6", "7", "8",
 					 "q", "w", "e", "r", "t", "y", "u"]
 		self.notes = ["c4", "d4", "e4", "f4", "g4", "a4", "b4", "c5",
@@ -30,6 +52,7 @@ class  Instrument():
 		print "done loading"
 
 	def load_instrument_notes(self, instrument, file1, fextension):
+		"""Create list of Sound objects from audio files for each instrument"""
 		instrument_sounds = []
 		for note in self.notes:
 			instrument_sounds.append(pygame.mixer.Sound(\
@@ -37,6 +60,7 @@ class  Instrument():
 		return instrument_sounds
 
 	def play_key_sound(self, message, recording):
+		"""parse note and instrument from message, play note. Record note"""
 		instrument = message[0]
 		print message
 		if len(message) == 2:
