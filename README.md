@@ -8,11 +8,9 @@ the piano, trumpet or flute.
 
 **Requirements:**
 
-Pygame 
-
-Python 2.7
-
-For optimal play, PC is recommended.
+* Pygame 
+* Python 2.7
+* For optimal play, PC is recommended.
 
 ## How to Use
 
@@ -22,19 +20,20 @@ For optimal play, PC is recommended.
     * port = port number must be greater than or equal to 1024
 
 **Join as Client**
-* `python player_client.py [host] [port] [p | t | f]`
+* `python player_client.py [host] [port] [p | t | f] [username]`
     * host = IP address where server is hosted
     * port = port number where server is running
     * [p | t | f]
         * p = piano
         * t = trumpet
         * f = flute
+    * username = name to identify player
 
 **Playing**
 * Type using QWERTY keyboard
 * 2 octaves currently available:
-    * C4 - C5 = keys 1 - 8
-    * D5 - C6 = keys Q - U
+    * C4 - C5 = keyboard keys 1 - 8
+    * D5 - C6 = keyboard keys Q - U
 
 **Acknowledgements**
 
