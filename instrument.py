@@ -10,13 +10,16 @@ class  Instrument():
 					  "d5", "e5", "f5", "g5", "a5", "b5", "c6"]
 
 		print "loading piano notes...."
-		self.PIANO_KEY_SOUNDS = dict(zip(self.keys, self.load_piano_notes()))
+		piano_notes = self.load_instrument_notes('piano', '16_piano-med-', '.ogg')
+		self.PIANO_KEY_SOUNDS = dict(zip(self.keys, piano_notes))
 
 		print "loading trumpet notes...."
-		self.TRUMPET_KEY_SOUNDS = dict(zip(self.keys, self.load_trumpet_notes()))
+		trumpet_notes = self.load_instrument_notes('trumpet', 'Trumpet.novib.ff.', '.stereo.ogg')
+		self.TRUMPET_KEY_SOUNDS = dict(zip(self.keys, trumpet_notes))
 
 		print "loading flute notes...."
-		self.FLUTE_KEY_SOUNDS = dict(zip(self.keys, self.load_flute_notes()))
+		flute_notes = self.load_instrument_notes('flute', 'Flute.nonvib.ff.', '.stereo.ogg')
+		self.FLUTE_KEY_SOUNDS = dict(zip(self.keys, flute_notes))
 
 		self.instrument_notes = {
 			"p": self.PIANO_KEY_SOUNDS,
@@ -26,33 +29,12 @@ class  Instrument():
 
 		print "done loading"
 
-	def load_instrument_notes(self, path, file1, fextension):
+	def load_instrument_notes(self, instrument, file1, fextension):
 		instrument_sounds = []
 		for note in self.notes:
 			instrument_sounds.append(pygame.mixer.Sound(\
 			 	os.path.join('sounds/'+instrument,file1+note+fextension)))
 		return instrument_sounds
-
-	def load_piano_notes(self):
-		piano_sounds = []
-		for note in self.notes:
-			 piano_sounds.append(pygame.mixer.Sound(\
-			 	os.path.join('sounds/piano','16_piano-med-'+note+'.ogg')))
-		return piano_sounds
-
-	def load_trumpet_notes(self):
-		trumpet_sounds = []
-		for note in self.notes:
-			trumpet_sounds.append(pygame.mixer.Sound(\
-				 	os.path.join('sounds/trumpet','Trumpet.novib.ff.'+note+'.stereo.ogg')))
-		return trumpet_sounds
-
-	def load_flute_notes(self):
-		flute_sounds = []
-		for note in self.notes:
-			flute_sounds.append(pygame.mixer.Sound(\
-				 	os.path.join('sounds/flute','Flute.nonvib.ff.'+note+'.stereo.ogg')))
-		return flute_sounds
 
 	def play_key_sound(self, message, recording):
 		instrument = message[0]
