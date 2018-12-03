@@ -1,6 +1,5 @@
 import pygame
 import os
-from get_key import get_key
 
 class  Instrument():
 
@@ -18,24 +17,6 @@ class  Instrument():
 
 		print "loading flute notes...."
 		self.FLUTE_KEY_SOUNDS = dict(zip(self.keys, self.load_flute_notes()))
-
-		self.pygame_string = {
-			pygame.K_q: "q",
-			pygame.K_w: "w",
-			pygame.K_e: "e",
-			pygame.K_r: "r",
-			pygame.K_t: "t",
-			pygame.K_y: "y",
-			pygame.K_u: "u",
-			pygame.K_1: "1",
-			pygame.K_2: "2",
-			pygame.K_3: "3",
-			pygame.K_4: "4",
-			pygame.K_5: "5",
-			pygame.K_6: "6",
-			pygame.K_7: "7",
-			pygame.K_8: "8",
-		}
 
 		self.instrument_notes = {
 			"p": self.PIANO_KEY_SOUNDS,
@@ -75,12 +56,12 @@ class  Instrument():
 
 	def play_key_sound(self, message, recording):
 		instrument = message[0]
+		print message
 		if len(message) == 2:
-			key = get_key(message[1])
+			key = message[1]
 			if instrument in self.instrument_notes:
 				instr = self.instrument_notes[instrument]
-				if key in self.pygame_string:
-					key = self.pygame_string[key]
+				if key in self.keys:
 					###############################
 					sound_raw = instr[key].get_raw()
 					recording.writeframes(sound_raw)

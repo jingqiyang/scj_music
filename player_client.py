@@ -1,13 +1,9 @@
 #!/usr/bin/env python
 
 """
-# run with ./player_client.py [host] [port]
-for example: ./player_client.py 127.0.0.1 65432
-
-problems:
-* finicky with key presses
-* EXTREMELY laggy
-* doesn't kill receive thread
+client for scj_music
+run with: python player_client.py [host] [port] [p | t | f]
+for example: python player_client.py 127.0.0.1 65432 p
 """
 
 import pygame
@@ -23,7 +19,7 @@ import wave
 import datetime
 #################
 
-pygame.mixer.pre_init(44100, -16, 2, 1024) # setup mixer to avoid sound lag
+pygame.mixer.pre_init(44100, -16, 8, 1024) # setup mixer to avoid sound lag
 pygame.mixer.init()
 pygame.init()
 screen = pygame.display.set_mode((100, 500), 0, 32)
