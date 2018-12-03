@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 """
-server for scj_music
+server for scj_music:
+Users running player_client.py can join the server to play together.
+
 run with: python music_server.py [host] [port]
 for example: python music_server.py 127.0.0.1 65432
 port number should be greater than or equal to 1024

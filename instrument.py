@@ -68,10 +68,8 @@ class  Instrument():
 			if instrument in self.instrument_notes:
 				instr = self.instrument_notes[instrument]
 				if key in self.keys:
-					###############################
 					sound_raw = instr[key].get_raw()
 					recording.writeframes(sound_raw)
-					###############################
 					instr[key].play()
 					instr[key].fadeout(800)
 
