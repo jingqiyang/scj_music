@@ -32,15 +32,19 @@ class  Instrument():
 					  "d5", "e5", "f5", "g5", "a5", "b5", "c6"]
 
 		print "loading piano notes...."
-		piano_notes = self.load_instrument_notes('piano', '16_piano-med-', '.ogg')
+		piano_notes = self.load_instrument_notes('piano', '16_piano-med-', 
+			                                     '.ogg')
 		self.PIANO_KEY_SOUNDS = dict(zip(self.keys, piano_notes))
 
 		print "loading trumpet notes...."
-		trumpet_notes = self.load_instrument_notes('trumpet', 'Trumpet.novib.ff.', '.stereo.ogg')
+		trumpet_notes = self.load_instrument_notes('trumpet', 
+			                                       'Trumpet.novib.ff.', 
+			                                       '.stereo.ogg')
 		self.TRUMPET_KEY_SOUNDS = dict(zip(self.keys, trumpet_notes))
 
 		print "loading flute notes...."
-		flute_notes = self.load_instrument_notes('flute', 'Flute.nonvib.ff.', '.stereo.ogg')
+		flute_notes = self.load_instrument_notes('flute', 'Flute.nonvib.ff.',
+		                                         '.stereo.ogg')
 		self.FLUTE_KEY_SOUNDS = dict(zip(self.keys, flute_notes))
 
 		self.instrument_notes = {

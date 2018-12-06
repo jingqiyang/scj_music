@@ -1,7 +1,11 @@
-SCJ_MUSIC (name TBD)
+﻿Concurrent Garage Band --- scj_music
 =======
-Have you ever had the urge to jam out with some friends, but you don’t have an instrument? Or maybe your bandmates are out of town and you can’t all get together? Our ‘concurrent garage band’ will allow people to have a jam session anytime, anywhere (as long as they can connect to the internet), with the options of playing
-the piano, trumpet or flute.
+Have you ever had the urge to jam out with some friends, 
+but you don’t have an instrument? Or maybe your bandmates are 
+out of town and you can’t all get together? Our ‘concurrent 
+garage band’ will allow people to have a jam session anytime, 
+anywhere (as long as they can connect to the internet), with 
+the options of playing the piano, trumpet or flute.
 
 
 ## Installation
@@ -35,9 +39,26 @@ the piano, trumpet or flute.
     * C4 - C5 = keyboard keys 1 - 8
     * D5 - C6 = keyboard keys Q - U
 
+**File Guide**
+sounds: a directory containing subdirectories with .ogg files
+for notes on each instrument. 
+
+instrument.py: Contains the functions necessary to play notes (points
+to the sound directory, and the relevant notes within)
+
+music_server.py: a server using sockets. takes string messages and broadcasts to all clients
+
+player_client.py: a client using sockets. gets key events, encodes
+them as strings and sends them to the server. receives strings 
+and plays them using relevant instrument functions.
+
 **Acknowledgements**
 
+Sound files taken from:
 
+Piano: https://github.com/Zulko/pianoputer
+
+Trumpet/Flute: http://theremin.music.uiowa.edu/index.html
 
 
 
